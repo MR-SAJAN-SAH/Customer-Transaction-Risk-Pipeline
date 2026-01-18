@@ -146,6 +146,6 @@ These results demonstrate strong discriminative performance while maintaining re
 ### Author
 
 Sajan Kumar Sah  
-B.Tech Computer Science | Applied Machine   
-Learning GitHub: https://github.com/MR-SAJAN-SAH  
+B.Tech Computer Science | Applied Machine Learning   
+GitHub: https://github.com/MR-SAJAN-SAH  
 Portfolio: https://sajankumar.com.np

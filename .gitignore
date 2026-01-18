@@ -1,0 +1,19 @@
+#python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDEs & Editors
+.vscode/
+.idea/
+
+# Data files (DO NOT COMMIT)
+data/raw/
+data/clean/
+data/processed/
