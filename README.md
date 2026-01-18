@@ -48,6 +48,7 @@ The pipeline follows a strict layered design:
    ##### ↓
 ##### Model Training & Evaluation
 
+
 Each stage has a clearly defined responsibility and fails early if assumptions are violated.
 
 ## Data Processing & Validation
@@ -97,6 +98,8 @@ This mirrors real-world fraud systems where false positives carry operational co
 - PR-AUC: ~0.64
 - Fraud recall > 80% at precision ≥ 10%
 
+
+
 These results demonstrate strong discriminative performance while maintaining realistic trade-offs between detection coverage and false-positive rates.
 
 ## Reproducibility
@@ -106,6 +109,15 @@ These results demonstrate strong discriminative performance while maintaining re
 
 - Train the model
        python training/train_model.py
+
+<p align="center">
+  <img src="images/pipeline.png" width="600">
+</p>
+
+
+<p align="center">
+  <img src="images/result.png" width="600">
+</p>
 
 
 
@@ -135,5 +147,6 @@ These results demonstrate strong discriminative performance while maintaining re
 ### Author
 
 Sajan Kumar Sah  
-B.Tech Computer Science | Applied Machine   Learning GitHub: https://github.com/MR-SAJAN-SAH  
+B.Tech Computer Science | Applied Machine   
+Learning GitHub: https://github.com/MR-SAJAN-SAH  
 Portfolio: https://sajankumar.com.np
