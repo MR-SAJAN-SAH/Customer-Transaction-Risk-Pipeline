@@ -1,34 +1,58 @@
 import pandas as pd
 from pathlib import Path
 
-PROCESSED_DATA_PATH = Path("data/processed/customer_features_v1.csv")
-
+PROCESSED_DATA_PATH = Path(
+    "C:/Users/sajan/Documents/GitHub/Customer-Transaction-Risk-Pipeline/pipeline/data/processed/transaction_features_v1.csv"
+)
 
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Aggregates transaction-level data into customer-level and behavioral features WITHOUT label leakage.
+    Transaction-level fraud features.
+    Preserves PaySim fraud signal.
     """
 
     df = df.copy()
 
-    customer_features = df.groupby("nameOrig").agg(
-        total_transactions=("amount", "count"),
-        total_transaction_amount=("amount", "sum"),
-        avg_transaction_amount=("amount", "mean"),
-        std_transaction_amount=("amount", "std"),
-        max_transaction_amount=("amount", "max"),
-        min_transaction_amount=("amount", "min"),
-        last_transaction_step=("step", "max"),
+    # -----------------------
+    # Balance dynamics
+    # -----------------------
+    df["orig_balance_delta"] = df["oldbalanceOrg"] - df["newbalanceOrig"]
+    df["dest_balance_delta"] = df["newbalanceDest"] - df["oldbalanceDest"]
 
-        # These are kept ONLY for label creation, not as predictors
-        fraud_transaction_count=("isFraud", "sum"),
-        flagged_transaction_count=("isFlaggedFraud", "sum")
-    ).reset_index()
+    # -----------------------
+    # Transaction type encoding
+    # -----------------------
+    df["is_transfer"] = (df["type"] == "TRANSFER").astype(int)
+    df["is_cashout"] = (df["type"] == "CASH_OUT").astype(int)
 
-    # Replace NaN from std (customers with single transaction)
-    customer_features = customer_features.fillna(0)
+    # -----------------------
+    # Risk heuristics (strong signals in PaySim)
+    # -----------------------
+    df["amount_over_orig_balance"] = (
+        df["amount"] > df["oldbalanceOrg"]
+    ).astype(int)
 
-    return customer_features
+    df["zero_dest_balance_before"] = (
+        df["oldbalanceDest"] == 0
+    ).astype(int)
+
+    # -----------------------
+    # Feature set
+    # -----------------------
+    features = [
+        "step",
+        "amount",
+        "orig_balance_delta",
+        "dest_balance_delta",
+        "is_transfer",
+        "is_cashout",
+        "amount_over_orig_balance",
+        "zero_dest_balance_before",
+    ]
+
+    final_df = df[features + ["isFraud"]].copy()
+
+    return final_df
 
 
 def save_features(df: pd.DataFrame) -> None:
