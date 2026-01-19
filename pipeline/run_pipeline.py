@@ -7,31 +7,43 @@ from feature_engineering import engineer_features, save_features
 def run_pipeline():
     print("🔹 Starting data pipeline...")
 
-    #Extract
+    # -------------------------
+    # Extract
+    # -------------------------
     raw_df = extract_raw_data()
     print(f"Extracted raw data: {raw_df.shape}")
 
-    #Transform
+    # -------------------------
+    # Transform
+    # -------------------------
     clean_df = transform_data(raw_df)
     print(f"Transformed data: {clean_df.shape}")
 
-    #Validate
+    # -------------------------
+    # Validate
+    # -------------------------
     validate_data(clean_df)
     print("Data validation passed")
 
-    #Save the clean data
+    # -------------------------
+    # Save clean data
+    # -------------------------
     save_clean_data(clean_df)
     print("Clean data saved")
 
-    #Feature Engineering
+    # -------------------------
+    # Feature engineering
+    # -------------------------
     feature_df = engineer_features(clean_df)
     print(f"Features engineered: {feature_df.shape}")
 
-    #Save processed features
+    # -------------------------
+    # Save processed features
+    # -------------------------
     save_features(feature_df)
     print("Processed features saved")
 
-    print("Pipeline completed successfully")
+    print("Pipeline completed successfully ✅")
 
 
 if __name__ == "__main__":
