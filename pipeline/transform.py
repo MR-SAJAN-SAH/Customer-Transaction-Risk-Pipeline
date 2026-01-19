@@ -5,7 +5,10 @@ CLEAN_DATA_PATH = Path("data/clean/transactions_clean.csv")
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Cleans raw transaction data: i)Type conversions  ii)Removing invalid records  iii)Deduplication
+    Cleans raw transaction data:
+    - Type conversions
+    - Remove invalid records
+    - Deduplication
     """
 
     df = df.copy()
@@ -17,16 +20,20 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     numeric_cols = [
         "step", "amount",
         "oldbalanceOrg", "newbalanceOrig",
-        "oldbalanceDest", "newbalanceDest"
+        "oldbalanceDest", "newbalanceDest",
+        "isFraud", "isFlaggedFraud",
     ]
 
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # Remove invalid transactions & duplicates
+    # Remove invalid rows
     df = df[df["amount"] > 0]
-    df = df.dropna(subset=["nameOrig", "nameDest"])
+    df = df.dropna(subset=["nameOrig", "nameDest", "type"])
+
+    # Deduplicate
     df = df.drop_duplicates()
+
     return df
 
 
