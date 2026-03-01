@@ -107,16 +107,6 @@ These results demonstrate strong discriminative performance while maintaining re
 - Run the data pipeline
        python pipeline/run_pipeline.py
 
-<p align="center">
-  <img src="images/pipeline.png" width="600">
-</p>
-
-- Train the model
-       python training/train_model.py
-
-<p align="center">
-  <img src="images/result.png" width="600">
-</p>
 
 
 
