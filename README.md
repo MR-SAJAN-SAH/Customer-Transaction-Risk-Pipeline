@@ -54,7 +54,7 @@ Each stage has a clearly defined responsibility and fails early if assumptions a
 ## Data Processing & Validation
 
 The pipeline enforces explicit data integrity checks, including:
-- Schema validation
+- Schema validationS
 - Type coercion
 - Removal of invalid or inconsistent records
 - Balance consistency checks
